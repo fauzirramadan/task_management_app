@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/utils.dart';
 import 'package:task_management_app/services/notification_services.dart';
 import 'package:task_management_app/services/theme_services.dart';
 
@@ -34,7 +33,18 @@ class _HomePageState extends State<HomePage> {
                       ? "Activate Light mode"
                       : "Activate Dark mode");
             },
-            icon: const Icon(Icons.mode_night_rounded)),
+            icon: const Icon(
+              Icons.mode_night_outlined,
+              color: Colors.grey,
+            )),
+        actions: [
+          CircleAvatar(
+            child: IconButton(onPressed: () {}, icon: const Icon(Icons.person)),
+          ),
+          const SizedBox(
+            width: 10,
+          )
+        ],
       ),
     );
   }

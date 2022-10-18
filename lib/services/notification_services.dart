@@ -7,10 +7,9 @@ import 'package:get/get.dart';
 
 class NotificationHelper {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin(); //
+      FlutterLocalNotificationsPlugin();
 
   initializeNotification() async {
-    //tz.initializeTimeZones();
     final DarwinInitializationSettings initializationSettingsIOS =
         DarwinInitializationSettings(
             requestSoundPermission: false,

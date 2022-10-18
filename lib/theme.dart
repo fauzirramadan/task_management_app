@@ -25,11 +25,14 @@ const Color darkHeaderClr = Color(0XFF424242);
 
 class Themes {
   static final lightMode = ThemeData(
+      appBarTheme: const AppBarTheme(backgroundColor: white, elevation: 0),
       primaryColor: primaryColor,
       primarySwatch: primarySwatchClr,
       brightness: Brightness.light);
 
   static final darkMode = ThemeData(
+      appBarTheme:
+          const AppBarTheme(backgroundColor: darkHeaderClr, elevation: 0),
       primaryColor: darkGreyClr,
       primarySwatch: darkSwatchClr,
       brightness: Brightness.dark);
