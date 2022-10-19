@@ -1,7 +1,14 @@
+import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_date_picker_timeline/flutter_date_picker_timeline.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:task_management_app/components/myappbar.dart';
+import 'package:task_management_app/components/mybutton.dart';
 import 'package:task_management_app/services/notification_services.dart';
 import 'package:task_management_app/services/theme_services.dart';
+import 'package:task_management_app/theme.dart';
+import 'package:task_management_app/ui/add_task_form.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,6 +19,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final NotificationHelper _notificationHelper = NotificationHelper();
+  String dateNow = DateFormat.yMMMMd().format(DateTime.now());
+  DateTime? _selectedDate = DateTime.now();
   @override
   void initState() {
     _notificationHelper;
@@ -22,27 +31,64 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(ThemeServices());
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-            onPressed: () {
-              ThemeServices.switchTheme();
-              _notificationHelper.displayNotification(
-                  title: "Theme changed",
-                  body: Get.isDarkMode
-                      ? "Activate Light mode"
-                      : "Activate Dark mode");
-            },
-            icon: const Icon(
-              Icons.mode_night_outlined,
-              color: Colors.grey,
-            )),
-        actions: [
-          CircleAvatar(
-            child: IconButton(onPressed: () {}, icon: const Icon(Icons.person)),
+      appBar: myAppBar(
+        () {
+          controller.switchTheme();
+          _notificationHelper.displayNotification(
+              title: "Theme changed",
+              body: Get.isDarkMode
+                  ? "Activate Light mode"
+                  : "Activate Dark mode");
+        },
+      ),
+      body: Column(
+        children: [_addTaskBar(), _dateBar()],
+      ),
+    );
+  }
+
+  Widget _dateBar() {
+    return Container(
+        padding: const EdgeInsets.only(left: 3),
+        child: FlutterDatePickerTimeline(
+          initialSelectedDate: DateTime.now(),
+          startDate: _selectedDate!,
+          endDate: DateTime(2025, 12, 30),
+          onSelectedDateChange: (date) {
+            _selectedDate = date;
+          },
+          itemHeight: 50,
+          unselectedItemTextStyle: const TextStyle(color: Colors.black),
+          selectedItemBackgroundColor: primaryColor,
+          selectedItemWidth: 150,
+          unselectedItemWidth: 40,
+        ));
+  }
+
+  Widget _addTaskBar() {
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(dateNow, style: headingStyle),
+              const SizedBox(
+                height: 5,
+              ),
+              Text(
+                "Today",
+                style: subHeadingStyle,
+              )
+            ],
           ),
-          const SizedBox(
-            width: 10,
+          MyuButton(
+            onTap: () => Get.to(() => const AddTaskForm()),
+            label: "Add Task",
           )
         ],
       ),

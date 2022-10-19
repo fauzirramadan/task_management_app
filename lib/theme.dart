@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:task_management_app/utils/constant.dart';
 
 Map<int, Color> color = {
   50: const Color.fromRGBO(136, 14, 79, .1),
@@ -36,4 +38,22 @@ class Themes {
       primaryColor: darkGreyClr,
       primarySwatch: darkSwatchClr,
       brightness: Brightness.dark);
+}
+
+TextStyle get headingStyle {
+  return GoogleFonts.poppins(
+      textStyle: TextStyle(
+          fontSize: medium,
+          color: Colors.grey[500],
+          fontWeight: FontWeight.w500));
+}
+
+TextStyle get subHeadingStyle {
+  return GoogleFonts.poppins(
+      textStyle:
+          const TextStyle(fontSize: mdmBit, fontWeight: FontWeight.w600));
+}
+
+TextStyle get normalTextStyle {
+  return GoogleFonts.poppins();
 }
