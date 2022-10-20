@@ -1,10 +1,11 @@
-import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_date_picker_timeline/flutter_date_picker_timeline.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:task_management_app/components/myappbar.dart';
 import 'package:task_management_app/components/mybutton.dart';
+import 'package:task_management_app/provider/theme_provider.dart';
 import 'package:task_management_app/services/notification_services.dart';
 import 'package:task_management_app/services/theme_services.dart';
 import 'package:task_management_app/theme.dart';
@@ -32,6 +33,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(ThemeServices());
+    bool isDarkMode = context.watch<StreamTheme>().isDarkMode;
+
     return Scaffold(
       appBar: myAppBar(
         () {
@@ -41,15 +44,20 @@ class _HomePageState extends State<HomePage> {
               body: Get.isDarkMode
                   ? "Activate Light mode"
                   : "Activate Dark mode");
+          context.read<StreamTheme>().switchTheme();
         },
+        Icon(
+          isDarkMode ? Icons.wb_sunny_outlined : Icons.mode_night_outlined,
+          color: isDarkMode ? Colors.white : Colors.black,
+        ),
       ),
       body: Column(
-        children: [_addTaskBar(), _dateBar()],
+        children: [_addTaskBar(), _dateBar(isDarkMode)],
       ),
     );
   }
 
-  Widget _dateBar() {
+  Widget _dateBar(bool isDarkMode) {
     return Container(
         padding: const EdgeInsets.only(left: 3),
         child: FlutterDatePickerTimeline(
@@ -60,8 +68,11 @@ class _HomePageState extends State<HomePage> {
             _selectedDate = date;
           },
           itemHeight: 50,
-          unselectedItemTextStyle: const TextStyle(color: Colors.black),
+          unselectedItemTextStyle:
+              TextStyle(color: isDarkMode ? Colors.black : Colors.black),
+          selectedItemTextStyle: const TextStyle(color: Colors.white),
           selectedItemBackgroundColor: primaryColor,
+          unselectedItemBackgroundColor: isDarkMode ? Colors.white60 : white,
           selectedItemWidth: 150,
           unselectedItemWidth: 40,
         ));

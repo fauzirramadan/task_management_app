@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 
-PreferredSizeWidget myAppBar(void Function()? onPressed) {
+PreferredSizeWidget myAppBar(void Function()? onPressed, Icon icon) {
   return AppBar(
     leading: IconButton(
       onPressed: onPressed,
-      icon: const Icon(
-        Icons.mode_night_outlined,
-        color: Colors.grey,
-      ),
+      icon: icon,
     ),
     actions: [
       CircleAvatar(
