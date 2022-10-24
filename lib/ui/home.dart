@@ -34,6 +34,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final controller = Get.put(ThemeServices());
     bool isDarkMode = context.watch<StreamTheme>().isDarkMode;
+    var themeProvider = context.read<StreamTheme>();
 
     return Scaffold(
       appBar: myAppBar(
@@ -44,7 +45,7 @@ class _HomePageState extends State<HomePage> {
               body: Get.isDarkMode
                   ? "Activate Light mode"
                   : "Activate Dark mode");
-          context.read<StreamTheme>().switchTheme();
+          themeProvider.switchTheme();
         },
         Icon(
           isDarkMode ? Icons.wb_sunny_outlined : Icons.mode_night_outlined,
@@ -52,7 +53,10 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       body: Column(
-        children: [_addTaskBar(), _dateBar(isDarkMode)],
+        children: [
+          _addTaskBar(),
+          _dateBar(isDarkMode),
+        ],
       ),
     );
   }
@@ -68,8 +72,7 @@ class _HomePageState extends State<HomePage> {
             _selectedDate = date;
           },
           itemHeight: 50,
-          unselectedItemTextStyle:
-              TextStyle(color: isDarkMode ? Colors.black : Colors.black),
+          unselectedItemTextStyle: const TextStyle(color: Colors.black),
           selectedItemTextStyle: const TextStyle(color: Colors.white),
           selectedItemBackgroundColor: primaryColor,
           unselectedItemBackgroundColor: isDarkMode ? Colors.white60 : white,
