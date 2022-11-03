@@ -1,5 +1,5 @@
+import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_date_picker_timeline/flutter_date_picker_timeline.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +21,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final NotificationHelper _notificationHelper = NotificationHelper();
   String dateNow = DateFormat.yMMMMd().format(DateTime.now());
-  DateTime? _selectedDate = DateTime.now();
+  DateTime _selectedDate = DateTime.now();
+  final DatePickerController _datePickerController = DatePickerController();
   @override
   void initState() {
     _notificationHelper;
@@ -54,7 +55,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Column(
         children: [
-          _addTaskBar(),
+          _addTaskBar(isDarkMode),
           _dateBar(isDarkMode),
         ],
       ),
@@ -64,24 +65,23 @@ class _HomePageState extends State<HomePage> {
   Widget _dateBar(bool isDarkMode) {
     return Container(
         padding: const EdgeInsets.only(left: 3),
-        child: FlutterDatePickerTimeline(
-          initialSelectedDate: DateTime.now(),
-          startDate: _selectedDate!,
-          endDate: DateTime(2025, 12, 30),
-          onSelectedDateChange: (date) {
-            _selectedDate = date;
+        child: DatePicker(
+          DateTime.now(),
+          height: 80,
+          width: 60,
+          selectionColor: isDarkMode ? Colors.blueGrey : primaryColor,
+          controller: _datePickerController,
+          daysCount: 7,
+          initialSelectedDate: _selectedDate,
+          onDateChange: (date) {
+            setState(() {
+              _selectedDate = date;
+            });
           },
-          itemHeight: 50,
-          unselectedItemTextStyle: const TextStyle(color: Colors.black),
-          selectedItemTextStyle: const TextStyle(color: Colors.white),
-          selectedItemBackgroundColor: primaryColor,
-          unselectedItemBackgroundColor: isDarkMode ? Colors.white60 : white,
-          selectedItemWidth: 150,
-          unselectedItemWidth: 40,
         ));
   }
 
-  Widget _addTaskBar() {
+  Widget _addTaskBar(bool isDarkMode) {
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Row(
@@ -101,8 +101,9 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
           MyuButton(
-            onTap: () => Get.to(() => const AddTaskForm()),
+            onTap: () => Get.to(() => AddTaskForm()),
             label: "Add Task",
+            buttonColor: isDarkMode ? Colors.blueGrey : primaryColor,
           )
         ],
       ),

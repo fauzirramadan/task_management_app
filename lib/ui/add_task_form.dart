@@ -8,25 +8,18 @@ import 'package:task_management_app/provider/date_field_provider.dart';
 import 'package:task_management_app/provider/reminder_provider.dart';
 import 'package:task_management_app/provider/time_fileld_provider.dart';
 import 'package:task_management_app/theme.dart';
-import 'package:task_management_app/utils/constant.dart';
 
 import '../provider/theme_provider.dart';
 
-class AddTaskForm extends StatefulWidget {
-  const AddTaskForm({super.key});
+class AddTaskForm extends StatelessWidget {
+  AddTaskForm({super.key});
 
-  @override
-  State<AddTaskForm> createState() => _AddTaskFormState();
-}
-
-class _AddTaskFormState extends State<AddTaskForm> {
-  TextEditingController titleC = TextEditingController();
-  TextEditingController noteC = TextEditingController();
+  final TextEditingController titleC = TextEditingController();
+  final TextEditingController noteC = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     bool isDarkMode = context.watch<StreamTheme>().isDarkMode;
-
     TextEditingController dateInput =
         context.watch<DateFieldProvider>().dateInput;
     var dateProvider = context.read<DateFieldProvider>();
@@ -171,10 +164,11 @@ class _AddTaskFormState extends State<AddTaskForm> {
         borderRadius: BorderRadius.circular(12),
       ),
       child: TextFormField(
-          validator: (value) => value!.isEmpty ? "cannot empty" : null,
-          controller: controller,
-          decoration: const InputDecoration(
-              hintText: "Enter title here", border: InputBorder.none)),
+        validator: (value) => value!.isEmpty ? "cannot empty" : null,
+        controller: controller,
+        decoration: const InputDecoration(
+            hintText: "Enter title here", border: InputBorder.none),
+      ),
     );
   }
 }

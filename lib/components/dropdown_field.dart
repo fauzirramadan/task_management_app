@@ -8,10 +8,9 @@ class DropDownField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<DropdownMenuItem<String>> menuItems = const [
-      DropdownMenuItem(value: "USA", child: Text("USA")),
-      DropdownMenuItem(value: "Canada", child: Text("Canada")),
-      DropdownMenuItem(value: "Brazil", child: Text("Brazil")),
-      DropdownMenuItem(value: "England", child: Text("England")),
+      DropdownMenuItem(value: "5", child: Text("5 minute")),
+      DropdownMenuItem(value: "10", child: Text("10 minute")),
+      DropdownMenuItem(value: "15", child: Text("15 minute")),
     ];
 
     return Container(
