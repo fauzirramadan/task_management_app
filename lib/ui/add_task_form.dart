@@ -30,7 +30,7 @@ class AddTaskForm extends StatelessWidget {
         context.watch<TimeFieldProvider>().endTimeInput;
     var timeProvider = context.read<TimeFieldProvider>();
 
-    String selectedValue = context.watch<ReminderProvider>().selectedValue;
+    int selectedValue = context.watch<ReminderProvider>().selectedValue;
     var reminderProvider = context.read<ReminderProvider>();
 
     return Scaffold(
@@ -79,7 +79,11 @@ class AddTaskForm extends StatelessWidget {
               const SizedBox(
                 height: 5,
               ),
-              _timeRow(startTimeInput, timeProvider, context, endTimeInput),
+              _timeRow(
+                  startTimeInput: startTimeInput,
+                  timeProvider: timeProvider,
+                  context: context,
+                  endTimeInput: endTimeInput),
               const SizedBox(
                 height: 5,
               ),
@@ -93,7 +97,7 @@ class AddTaskForm extends StatelessWidget {
               DropDownField(
                   value: selectedValue,
                   onChange: (newValue) {
-                    reminderProvider.selectReminder(newValue ?? "");
+                    reminderProvider.selectReminder(newValue ?? 0);
                   })
             ],
           ),
@@ -103,10 +107,10 @@ class AddTaskForm extends StatelessWidget {
   }
 
   Widget _timeRow(
-      TextEditingController startTimeInput,
-      TimeFieldProvider timeProvider,
-      BuildContext context,
-      TextEditingController endTimeInput) {
+      {required TextEditingController startTimeInput,
+      required TimeFieldProvider timeProvider,
+      required BuildContext context,
+      required TextEditingController endTimeInput}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -124,13 +128,14 @@ class AddTaskForm extends StatelessWidget {
               CustomField(
                   icon: Icons.access_time,
                   dateController: startTimeInput,
-                  onTap: () => timeProvider.chooseStartTime(context),
+                  onTap: () => timeProvider.chooseTime(
+                      context: context, isStartTime: true),
                   hintText: "Start time")
             ],
           ),
         ),
         const SizedBox(
-          width: 5,
+          width: 12,
         ),
         Expanded(
           child: Column(
@@ -146,7 +151,8 @@ class AddTaskForm extends StatelessWidget {
               CustomField(
                   icon: Icons.av_timer_rounded,
                   dateController: endTimeInput,
-                  onTap: () => timeProvider.chooseEndTime(context),
+                  onTap: () => timeProvider.chooseTime(
+                      context: context, isStartTime: false),
                   hintText: "End time")
             ],
           ),

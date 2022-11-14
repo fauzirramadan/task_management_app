@@ -1,12 +1,15 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 
 class ReminderProvider with ChangeNotifier {
-  String _selectedValue = "";
+  int _selectedValue = 0;
 
-  String get selectedValue => _selectedValue;
+  int get selectedValue => _selectedValue;
 
-  void Function(String?)? selectReminder(String newValue) {
+  void Function(int?)? selectReminder(int newValue) {
     _selectedValue = newValue;
+    log(newValue.toString());
     notifyListeners();
     return null;
   }

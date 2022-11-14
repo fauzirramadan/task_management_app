@@ -11,7 +11,8 @@ class DateFieldProvider with ChangeNotifier {
         context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime(2015),
-        lastDate: DateTime(2101));
+        lastDate: DateTime(2101),
+        initialEntryMode: DatePickerEntryMode.input);
 
     if (pickedDate != null) {
       String formattedDate = DateFormat.yMd().format(pickedDate);
