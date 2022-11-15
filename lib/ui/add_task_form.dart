@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:task_management_app/components/custom_field.dart';
 import 'package:task_management_app/components/dropdown_field.dart';
 import 'package:task_management_app/components/myappbar.dart';
+import 'package:task_management_app/components/mybutton.dart';
+import 'package:task_management_app/provider/choose_color_provider.dart';
 import 'package:task_management_app/provider/date_field_provider.dart';
 import 'package:task_management_app/provider/reminder_provider.dart';
 import 'package:task_management_app/provider/time_fileld_provider.dart';
@@ -24,14 +26,20 @@ class AddTaskForm extends StatelessWidget {
         context.watch<DateFieldProvider>().dateInput;
     var dateProvider = context.read<DateFieldProvider>();
 
+    // choose time
     TextEditingController startTimeInput =
         context.watch<TimeFieldProvider>().startTimeInput;
     TextEditingController endTimeInput =
         context.watch<TimeFieldProvider>().endTimeInput;
     var timeProvider = context.read<TimeFieldProvider>();
 
+    // reminder
     int selectedValue = context.watch<ReminderProvider>().selectedValue;
     var reminderProvider = context.read<ReminderProvider>();
+
+    // choose color
+    int selectedColor = context.watch<ChooseColorProvider>().selectedColor;
+    var chooseColorProvider = context.read<ChooseColorProvider>();
 
     return Scaffold(
       appBar: myAppBar(
@@ -98,11 +106,62 @@ class AddTaskForm extends StatelessWidget {
                   value: selectedValue,
                   onChange: (newValue) {
                     reminderProvider.selectReminder(newValue ?? 0);
-                  })
+                  }),
+              const SizedBox(
+                height: 5,
+              ),
+              Text(
+                "Color",
+                style: subHeadingStyle,
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  colorPalette(chooseColorProvider, selectedColor),
+                  MyuButton(
+                    onTap: () {},
+                    label: "Create Task",
+                    buttonColor: isDarkMode ? Colors.blueGrey : primaryColor,
+                  )
+                ],
+              ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Wrap colorPalette(
+      ChooseColorProvider chooseColorProvider, int selectedColor) {
+    return Wrap(
+      children: List<Widget>.generate(3, (index) {
+        return GestureDetector(
+          onTap: () {
+            chooseColorProvider.selectColor(index);
+          },
+          child: Padding(
+            padding: const EdgeInsets.only(right: 10.0),
+            child: CircleAvatar(
+              radius: 14,
+              backgroundColor: index == 0
+                  ? primaryColor
+                  : index == 1
+                      ? pinkClr
+                      : yellowClr,
+              child: selectedColor == index
+                  ? const Icon(
+                      Icons.done,
+                      color: Colors.white,
+                    )
+                  : const SizedBox(),
+            ),
+          ),
+        );
+      }),
     );
   }
 

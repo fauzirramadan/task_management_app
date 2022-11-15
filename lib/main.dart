@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:task_management_app/provider/choose_color_provider.dart';
 import 'package:task_management_app/provider/date_field_provider.dart';
 import 'package:task_management_app/provider/reminder_provider.dart';
 import 'package:task_management_app/provider/theme_provider.dart';
@@ -17,7 +18,8 @@ void main() async {
     ChangeNotifierProvider(create: (_) => StreamTheme()),
     ChangeNotifierProvider(create: (_) => DateFieldProvider()),
     ChangeNotifierProvider(create: (_) => TimeFieldProvider()),
-    ChangeNotifierProvider(create: (_) => ReminderProvider())
+    ChangeNotifierProvider(create: (_) => ReminderProvider()),
+    ChangeNotifierProvider(create: (_) => ChooseColorProvider())
   ], child: const MyApp()));
 }
 

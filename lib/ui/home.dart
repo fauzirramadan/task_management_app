@@ -71,6 +71,12 @@ class _HomePageState extends State<HomePage> {
           width: 60,
           selectionColor: isDarkMode ? Colors.blueGrey : primaryColor,
           controller: _datePickerController,
+          dateTextStyle: TextStyle(
+              color: isDarkMode ? Colors.grey : Colors.black54, fontSize: 20),
+          monthTextStyle: TextStyle(
+              color: isDarkMode ? Colors.grey : Colors.black54, fontSize: 12),
+          dayTextStyle: TextStyle(
+              color: isDarkMode ? Colors.grey : Colors.black54, fontSize: 12),
           daysCount: 7,
           initialSelectedDate: _selectedDate,
           onDateChange: (date) {
@@ -104,6 +110,10 @@ class _HomePageState extends State<HomePage> {
             onTap: () => Get.to(() => AddTaskForm()),
             label: "Add Task",
             buttonColor: isDarkMode ? Colors.blueGrey : primaryColor,
+            icon: const Icon(
+              Icons.add,
+              color: white,
+            ),
           )
         ],
       ),

@@ -3,14 +3,16 @@ import 'package:flutter/material.dart';
 import '../theme.dart';
 
 class MyuButton extends StatelessWidget {
-  final void Function()? onTap;
-  final String label;
-  final Color buttonColor;
-  const MyuButton(
+  void Function()? onTap;
+  String label;
+  Color buttonColor;
+  Widget? icon;
+  MyuButton(
       {super.key,
       required this.onTap,
       required this.label,
-      required this.buttonColor});
+      required this.buttonColor,
+      this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +24,7 @@ class MyuButton extends StatelessWidget {
       height: 45,
       child: Row(
         children: [
-          const Icon(
-            Icons.add,
-            color: white,
-          ),
+          icon ?? const SizedBox(),
           const SizedBox(
             width: 3,
           ),
