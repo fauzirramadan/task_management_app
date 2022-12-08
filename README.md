@@ -1,6 +1,6 @@
 # task_management_app
 
-A new Flutter project.
+With Provider and GetX State management + Local Notification + Theming
 
 ## Getting Started
 
